@@ -1,0 +1,12 @@
+<div class="container" ng-controller="FilesCtrl">
+    <div class="row col-md-12 files">
+        <div class="alert alert-info text-center" ng-hide="files.length > 0">
+            <h3>No Files!</h3>
+        </div>
+        <div ng-repeat="file in files" class="file col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <span>{{file.file}}</span>
+            </div> 
+        </div>
+    </div>
+</div>

@@ -14,29 +14,29 @@
 
 	//list files
 	router.get('/api/files', function (req, res) {
-		console.log("Going to read directory " + sampleDir);
+		//console.log("Going to read directory " + sampleDir);
 		fs.readdir(sampleDir, function (err, files) {
 			if (err) {
 				return console.error(err);
 			}
-			var resjson = "";
+			var response = [];
 
 			files.forEach(function (file) {
-				resjson += file + ", ";
+				response.push({file: file});
 
 				fs.stat(sampleDir + "/" + file, function (err, stats) {
 					if (err) {
 						return console.error(err);
 					}
-					if (stats.isFile()) {
-						console.log(file+":isFile");
-					}
-					if (stats.isDirectory()) {
-						console.log(file+":isDir");
-					}	
+					// if (stats.isFile()) {
+						// console.log(file+":isFile");
+					// }
+					// if (stats.isDirectory()) {
+						// console.log(file+":isDir");
+					// }	
 				});
 			});
-			res.json(resjson);
+			res.json(response);
 		});
 	});
 
