@@ -1,44 +1,18 @@
 (function () {
 
 	'use strict';
-	var express = require('express');
+	var express = require('express'),
+	fileSystem = require('./services/fileSystemService');
 	var router = express.Router();
-	var fs = require("fs");
+
 
 	/* GET home page. */
 	router.get('/', function (req, res) {
 		res.render('index');
 	});
 
-	var sampleDir = "D:/Node/Projects/nodecast";
-
 	//list files
-	router.get('/api/files', function (req, res) {
-		//console.log("Going to read directory " + sampleDir);
-		fs.readdir(sampleDir, function (err, files) {
-			if (err) {
-				return console.error(err);
-			}
-			var response = [];
-
-			files.forEach(function (file) {
-				response.push({file: file});
-
-				fs.stat(sampleDir + "/" + file, function (err, stats) {
-					if (err) {
-						return console.error(err);
-					}
-					// if (stats.isFile()) {
-						// console.log(file+":isFile");
-					// }
-					// if (stats.isDirectory()) {
-						// console.log(file+":isDir");
-					// }	
-				});
-			});
-			res.json(response);
-		});
-	});
+	router.get('/api/files', fileSystem.getFiles);
 
 	//Need to explore if we need these
 	// router.post('/api/files', function (req, res) {});
