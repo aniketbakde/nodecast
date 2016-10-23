@@ -4,7 +4,6 @@ nodeCast.controller('FilesCtrl', function($rootScope, $scope, filesFactory) {
  
   // get all files on Load
   filesFactory.getFiles().then(function(data) {
-	  console.log(data)
     $scope.files = data.data;
   });
  

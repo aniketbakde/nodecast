@@ -2,9 +2,9 @@
 
 	'use strict';
 	var express = require('express'),
-	fileSystem = require('./services/fileSystemService');
+	fileSystem = require('./services/fileSystemService'),
+	mdnsService = require('./services/mdnsService');
 	var router = express.Router();
-
 
 	/* GET home page. */
 	router.get('/', function (req, res) {
@@ -13,6 +13,8 @@
 
 	//list files
 	router.get('/api/files', fileSystem.getFiles);
+	router.get('/api/browseStart', mdnsService.browseStart);
+	router.get('/api/browseStop', mdnsService.browseStop);
 
 	//Need to explore if we need these
 	// router.post('/api/files', function (req, res) {});
