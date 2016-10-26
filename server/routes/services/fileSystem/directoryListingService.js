@@ -66,23 +66,13 @@
 
 	function getStats(sourceDir, files) {
 		return new Promise(function (resolve, reject) {
-			var retData = [];
 			var statPromises = [];
 			if (files) {
 				files = filterBlackListed(files);
-				files.forEach(function (file, idx) {
+				files.forEach(function (file) {
 					statPromises.push(getFileStatPromise(sourceDir, file));
 				});
-
-				Promise.all(statPromises)
-				.then(function (value) {
-					if (value) {
-						retData.push(value);
-					}
-				})
-				.done(function () {
-					resolve(retData);
-				});
+				Promise.all(statPromises).done(resolve);
 			} else {
 				resolve(null);
 			}
