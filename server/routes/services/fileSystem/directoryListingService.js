@@ -17,7 +17,9 @@
 				.done(function (files) {
 					getStats(sourceDir, files)
 					.done(function (data) {
-						resolve(fileFilterFactory.filterFiles(data));
+						resolve({
+							files : fileFilterFactory.filterFiles(data)
+						});
 					});
 				});
 			});

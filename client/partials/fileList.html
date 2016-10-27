@@ -1,0 +1,33 @@
+<div class="container" ng-controller="FileListCtrl">
+    <div class="row col-md-12 files">
+        <div class="alert alert-info text-center" ng-hide="content.drives.length > 0 || content.files.length > 0">
+            <h3>No Files!</h3>
+        </div>
+		
+		<div class="file col-md-12 col-sm-12 col-xs-12">
+			<div class="col-md-1 col-sm-1 col-xs-1">
+				<span class="glyphicon glyphicon-chevron-left"
+				ng-hide="content.drives.length > 0"
+				ng-click="getParentDir()"></span>
+			</div>
+			<div class="col-md-11 col-sm-11 col-xs-11">
+				<input type="text" ng-value="currentDir" />
+			</div>
+        </div>
+		
+		<div ng-repeat="drive in content.drives" class="file col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <span ng-click="getFiles(drive)">{{drive.name}}</span>
+            </div>	
+        </div>
+		
+        <div ng-repeat="file in content.files" class="file col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                <span ng-click="getFiles(file)">{{file.name}}</span>
+            </div>
+			<div class="col-md-8 col-sm-8 col-xs-8">
+                <span>{{file.fullName}}</span>
+            </div>			
+        </div>
+    </div>
+</div>

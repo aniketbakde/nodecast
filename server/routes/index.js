@@ -12,9 +12,10 @@
 	});
 
 	//list files
-	router.get('/api/files', fileSystem.getFiles);
-	router.get('/api/browseStart', mdnsService.browseStart);
-	router.get('/api/browseStop', mdnsService.browseStop);
+	// router.get('/api/files', fileSystem.getFiles);
+	router.post('/api/files', fileSystem.getFiles);
+	// router.get('/api/browseStart', mdnsService.browseStart);
+	// router.get('/api/browseStop', mdnsService.browseStop);
 
 	//Need to explore if we need these
 	// router.post('/api/files', function (req, res) {});

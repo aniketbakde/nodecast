@@ -2,8 +2,8 @@ nodeCast = angular.module('nodeCast', ['ngRoute'])
   .config(function($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: '/partials/files.html',
-        controller: 'FilesCtrl'
+        templateUrl: '/partials/fileList.html',
+        controller: 'FileListCtrl'
       }).otherwise({
         redirectTo: '/'
       });

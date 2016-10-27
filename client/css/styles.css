@@ -23,6 +23,9 @@
 .file:hover {
     background: #e7e7e7;
 }
+input {
+	width: 100%;
+}
 @media (max-width: 991px) {
     .file .btn {
         margin-bottom: 10px;

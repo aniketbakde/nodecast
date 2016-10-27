@@ -8,12 +8,19 @@
 				if (error) {
 					reject(error);
 				} else {
-					resolve(disks);
+					resolve({
+						drives : disks.map(function (drive) {
+							return {
+								name : drive.name,
+								fullName : drive.name + "/"
+							};
+						})
+					});
 				}
 			});
 		});
 	}
-	
+
 	module.exports = {
 		getDrives : getDrives
 	};
