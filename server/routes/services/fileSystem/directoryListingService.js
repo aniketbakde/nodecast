@@ -15,9 +15,9 @@
 			return new Promise(function (resolve, reject) {
 				osFileListingService.getFiles(sourceDir)
 				.done(function (files) {
-					getStats(sourceDir, fileFilterFactory.filterFiles(files))
+					getStats(sourceDir, files)
 					.done(function (data) {
-						resolve(data);
+						resolve(fileFilterFactory.filterFiles(data));
 					});
 				});
 			});
