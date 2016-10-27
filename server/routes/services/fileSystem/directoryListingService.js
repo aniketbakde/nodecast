@@ -1,6 +1,7 @@
 (function () {
 	var fs = require('fs'),
 	driveDiscoveryService = require('../../services/fileSystem/driveDiscoveryService'),
+	fileFilterFactory = require('../../services/fileSystem/fileFilterFactory'),
 	osFileListingService = require('../../services/operatingSystem/fileListingService'),
 	Promise = require('promise');
 
@@ -14,7 +15,8 @@
 			return new Promise(function (resolve, reject) {
 				osFileListingService.getFiles(sourceDir)
 				.done(function (files) {
-					getStats(sourceDir, files).done(function (data) {
+					getStats(sourceDir, fileFilterFactory.filterFiles(files))
+					.done(function (data) {
 						resolve(data);
 					});
 				});
