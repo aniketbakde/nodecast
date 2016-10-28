@@ -1,9 +1,5 @@
 <div class="container" ng-controller="FileListCtrl">
     <div class="row col-md-12 files">
-        <div class="alert alert-info text-center" ng-hide="content.drives.length > 0 || content.files.length > 0">
-            <h3>No Files!</h3>
-        </div>
-		
 		<div class="file col-md-12 col-sm-12 col-xs-12">
 			<div class="col-md-1 col-sm-1 col-xs-1">
 				<span class="glyphicon glyphicon-chevron-left"
@@ -14,7 +10,9 @@
 				<input type="text" ng-value="currentDir" />
 			</div>
         </div>
-		
+		<div class="alert alert-info text-center" ng-hide="content.drives.length > 0 || content.files.length > 0">
+            <h3>No Files!</h3>
+        </div>
 		<div ng-repeat="drive in content.drives" class="file col-md-12 col-sm-12 col-xs-12">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <span ng-click="getFiles(drive)">{{drive.name}}</span>

@@ -12,7 +12,7 @@
 						drives : disks.map(function (drive) {
 							return {
 								name : drive.name,
-								fullName : drive.name + "/"
+								fullName : drive.name
 							};
 						})
 					});

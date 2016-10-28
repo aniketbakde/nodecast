@@ -13,14 +13,8 @@
 		});
 	};
 
-	// var postFiles = function (req, res) {
-	// console.log(req.body);
-	// res.json(true);
-	// };
-
 	module.exports = {
 		getFiles : getFiles
-		// postFiles : postFiles
 	};
 }
 	());

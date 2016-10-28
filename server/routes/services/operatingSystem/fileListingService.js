@@ -10,7 +10,7 @@
 	function executeFileListCmd(workingDir) {
 		return new Promise(function (resolve, reject) {
 			childProcess.exec(getFileListCmd(), {
-				cwd : workingDir
+				cwd : fixPath(workingDir)
 			}, function (error, stdout, stderr) {
 				if (error) {
 					reject(error);
@@ -25,9 +25,13 @@
 		});
 	}
 
+	function fixPath(dir) {
+		return dir.replace(":", ":/");
+	}
+
 	function parseCmdOutput(output) {
 		var files = output.split('\r\n');
-		return files.slice(0, files.length-1);
+		return files.slice(0, files.length - 1);
 	}
 
 	function getFiles(dir) {

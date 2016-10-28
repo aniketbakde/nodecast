@@ -4,16 +4,15 @@
 	var ACCEPT_EXTN = ['.mp4'];
 
 	function isExtnAccept(file) {
-		console.log(file+":::"+(path.extname(file)));
 		return (ACCEPT_EXTN.indexOf(path.extname(file)) >= 0);
 	}
 
 	function filterFiles(files) {
-		return files.filter(function (file) {
-			if (file.isDirectory || isExtnAccept(file.name)) {
-				return file;
-			}
-		});
+		return (files ? files.filter(function (file) {
+				if (file.isDirectory || isExtnAccept(file.name)) {
+					return file;
+				}
+			}) : null);
 	}
 
 	module.exports = {
