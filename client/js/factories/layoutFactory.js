@@ -1,15 +1,18 @@
-nodeCast.factory('layoutFactory',
-	['$window',
-		function ($window) {
-			var _layoutFactory = {};
+(function () {
+	angular.module('nodeCast').factory('layoutFactory',
+		['$window',
+			function ($window) {
+				var _layoutFactory = {};
 
-			_layoutFactory.windowSize = function () {
-				console.log($window.innerWidth);
-				return $window.innerWidth;
-			};
+				_layoutFactory.windowSize = function () {
+					console.log($window.innerWidth);
+					return $window.innerWidth;
+				};
 
-			_layoutFactory.prepareLayoutJson = function (data) {}
+				_layoutFactory.prepareLayoutJson = function (data) {}
 
-			return _layoutFactory;
-		}
-	]);
+				return _layoutFactory;
+			}
+		]);
+}
+	());

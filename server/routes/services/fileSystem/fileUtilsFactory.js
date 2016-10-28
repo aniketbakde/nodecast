@@ -1,5 +1,7 @@
 (function () {
-	var path = require('path');
+	var fs = require('fs'),
+	path = require('path'),
+	Promise = require('promise');
 
 	var ACCEPT_EXTN = ['.mp4'];
 
@@ -15,8 +17,17 @@
 			}) : null);
 	}
 
+	function exists(file) {
+		return new Promise(function (resolve, reject) {
+			fs.exists(file, function (exists) {
+				(exists ? resolve(true) : resolve(false));
+			});
+		});
+	}
+
 	module.exports = {
-		filterFiles : filterFiles
+		filterFiles : filterFiles,
+		exists : exists
 	};
 }
 	());

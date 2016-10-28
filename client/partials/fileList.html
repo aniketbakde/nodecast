@@ -6,8 +6,12 @@
 				ng-hide="content.drives.length > 0"
 				ng-click="getParentDir()"></span>
 			</div>
-			<div class="col-md-11 col-sm-11 col-xs-11">
-				<input type="text" ng-value="currentDir" />
+			<div class="col-md-10 col-sm-10 col-xs-10">
+				<input type="text" ng-model="currentDir.text" enter-key-press="goToDir()"/>
+			</div>
+			<div class="col-md-1 col-sm-1 col-xs-1">
+				<span class="glyphicon glyphicon-chevron-right"
+				ng-hide="content.drives.length > 0"></span>
 			</div>
         </div>
 		<div class="alert alert-info text-center" ng-hide="content.drives.length > 0 || content.files.length > 0">
@@ -20,8 +24,9 @@
         </div>
 		
         <div ng-repeat="file in content.files" class="file col-md-12 col-sm-12 col-xs-12">
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <span ng-click="getFiles(file)">{{file.name}}</span>
+            <div class="col-md-4 col-sm-4 col-xs-4" ng-switch on="file.isDirectory">
+				<span ng-click="getFiles(file)" ng-switch-when="true">{{file.name}}</span>
+				<span ng-switch-default>{{file.name}}</span>
             </div>
 			<div class="col-md-8 col-sm-8 col-xs-8">
                 <span>{{file.fullName}}</span>

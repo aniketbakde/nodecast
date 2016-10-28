@@ -1,7 +1,7 @@
 (function () {
 	var fs = require('fs'),
 	driveDiscoveryService = require('../../services/fileSystem/driveDiscoveryService'),
-	fileFilterFactory = require('../../services/fileSystem/fileFilterFactory'),
+	fileUtilsFactory = require('../../services/fileSystem/fileUtilsFactory'),
 	osFileListingService = require('../../services/operatingSystem/fileListingService'),
 	Promise = require('promise');
 
@@ -13,14 +13,17 @@
 			});
 		} else {
 			return new Promise(function (resolve, reject) {
-				osFileListingService.getFiles(sourceDir)
-				.done(function (files) {
-					getStats(sourceDir, files)
-					.done(function (data) {
-						resolve({
-							files : fileFilterFactory.filterFiles(data)
-						});
-					});
+				fileUtilsFactory.exists(sourceDir)
+				.done(function (exists) {
+					(exists ? osFileListingService.getFiles(sourceDir)
+						.done(function (files) {
+							getStats(sourceDir, files)
+							.done(function (data) {
+								resolve({
+									files : fileUtilsFactory.filterFiles(data)
+								});
+							});
+						}) : resolve(null));
 				});
 			});
 		}
@@ -33,6 +36,10 @@
 					reject(err);
 				}
 				if (stats) {
+					// console.log("###############");
+					// console.log(file);
+					// console.log(stats);
+					// console.log("###############");
 					resolve({
 						name : file,
 						fullName : sourceDir + "/" + file,
