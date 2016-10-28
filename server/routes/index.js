@@ -2,7 +2,8 @@
 
 	'use strict';
 	var express = require('express'),
-	fileSystem = require('./services/fileSystemService'),
+	fileSystemService = require('./services/fileSystem/fileSystemService'),
+	videoCastService = require('./services/videoCast/videoCastService'),
 	mdnsService = require('./services/mdnsService');
 	var router = express.Router();
 
@@ -12,9 +13,11 @@
 	});
 
 	//list files
-	// router.get('/api/files', fileSystem.getFiles);
-	router.post('/api/files', fileSystem.getFiles);
-	// router.get('/api/browseStart', mdnsService.browseStart);
+	router.get('/api/files', fileSystemService.getFiles);
+	router.post('/api/files', fileSystemService.getFiles);
+	router.get('/api/castvideo/:_cmd', videoCastService.cast);
+	// router.get('/api/castvideo', videoCastService.cast);
+	// router.post('/api/castvideo', videoCastService.cast);
 	// router.get('/api/browseStop', mdnsService.browseStop);
 
 	//Need to explore if we need these

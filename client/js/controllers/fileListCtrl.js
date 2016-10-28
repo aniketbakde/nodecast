@@ -1,7 +1,7 @@
 (function () {
 	angular.module('nodeCast').controller('FileListCtrl',
-		['$rootScope', '$scope', 'filesFactory', 'layoutFactory',
-			function ($rootScope, $scope, filesFactory, layoutFactory) {
+		['$rootScope', '$scope', 'filesFactory', 'videoCastFactory', 'layoutFactory',
+			function ($rootScope, $scope, filesFactory, videoCastFactory, layoutFactory) {
 
 				$scope.content = null;
 				$scope.currentDir = {};
@@ -15,19 +15,27 @@
 					});
 				};
 
-				$scope.getFiles = getFiles;
-
-				$scope.getParentDir = function () {
+				function getParentDir() {
 					getFiles({
 						fullName : filesFactory.getParentDir($scope.currentDir.text)
 					});
 				};
 
-				$scope.goToDir = function () {
+				function goToDir() {
 					getFiles({
 						fullName : $scope.currentDir.text
 					});
 				}
+
+				function castVideo(file) {
+					console.log(file);
+					videoCastFactory.cast(file.fullName);
+				}
+
+				$scope.getFiles = getFiles;
+				$scope.getParentDir = getParentDir;
+				$scope.goToDir = goToDir;
+				$scope.castVideo = castVideo;
 
 				getFiles();
 			}

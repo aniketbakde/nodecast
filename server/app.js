@@ -24,6 +24,7 @@
 	app.use(cookieParser());
 
 	app.use(express.static(path.join(__dirname, '../client')));
+	app.use("/static", express.static(path.join(__dirname, '../server/hp')));
 
 	app.use('/', routes);
 

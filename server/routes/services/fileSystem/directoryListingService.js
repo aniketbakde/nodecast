@@ -15,7 +15,8 @@
 			return new Promise(function (resolve, reject) {
 				fileUtilsFactory.exists(sourceDir)
 				.done(function (exists) {
-					(exists ? osFileListingService.getFiles(sourceDir)
+					if (exists) {
+						osFileListingService.getFiles(sourceDir)
 						.done(function (files) {
 							getStats(sourceDir, files)
 							.done(function (data) {
@@ -23,7 +24,10 @@
 									files : fileUtilsFactory.filterFiles(data)
 								});
 							});
-						}) : resolve(null));
+						});
+					} else {
+						resolve(null);
+					}
 				});
 			});
 		}

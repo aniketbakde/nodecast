@@ -10,17 +10,25 @@
 	}
 
 	function filterFiles(files) {
-		return (files ? files.filter(function (file) {
+		if (files) {
+			return files.filter(function (file) {
 				if (file.isDirectory || isExtnAccept(file.name)) {
 					return file;
 				}
-			}) : null);
+			});
+		} else {
+			return null;
+		}
 	}
 
 	function exists(file) {
 		return new Promise(function (resolve, reject) {
 			fs.exists(file, function (exists) {
-				(exists ? resolve(true) : resolve(false));
+				if (exists) {
+					resolve(true);
+				} else {
+					resolve(false);
+				}
 			});
 		});
 	}
