@@ -1,12 +1,11 @@
 (function () {
 	var fs = require('fs'),
 	path = require('path'),
+	mediaContentTypes = require('../../services/mediaInfo/mediaContentTypes'),
 	Promise = require('promise');
 
-	var ACCEPT_EXTN = ['.mp4'];
-
 	function isExtnAccept(file) {
-		return (ACCEPT_EXTN.indexOf(path.extname(file)) >= 0);
+		return (mediaContentTypes[path.extname(file)] !== undefined);
 	}
 
 	function filterFiles(files) {

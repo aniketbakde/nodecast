@@ -3,6 +3,7 @@
 	CastCommand = require('../../services/videoCast/castCommand'),
 	CastClient = require('../../services/videoCast/castClient'),
 	mediaHostingService = require('../../services/mediaHosting/mediaHostingService'),
+	mediaInfoUtilsFactory = require('../../services/mediaInfo/mediaInfoUtilsFactory'),
 	Promise = require('promise');
 
 	var castClient;
@@ -21,7 +22,7 @@
 				return castClient.load({
 					// Here you can plug an URL to any mp4, webm, mp3 or jpg file with the proper contentType.
 					contentId : mediaHostingService.hostMediaContent(media.fullName),
-					contentType : 'video/mp4',
+					contentType : mediaInfoUtilsFactory.getContentType(media.name),
 					streamType : 'BUFFERED', // or LIVE
 					// Title and cover displayed while buffering
 					metadata : {
@@ -69,6 +70,7 @@
 
 	function dummyHandler(req, res) {
 		//for test purpose
+		mediaInfoUtilsFactory.getContentType('abc.avi');
 		res.json(true);
 	}
 
