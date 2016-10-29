@@ -1,0 +1,41 @@
+{
+  "name": "nodecast",
+  "version": "1.0.0",
+  "description": "chrome cast node app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aniketbakde/nodecast.git"
+  },
+  "author": "Aniket Bakde",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aniketbakde/nodecast/issues"
+  },
+  "homepage": "https://github.com/aniketbakde/nodecast#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "castv2-client": "^1.1.2",
+    "cookie-parser": "^1.4.3",
+    "crypto": "0.0.3",
+    "debug": "^2.2.0",
+    "drivelist": "^3.3.4",
+    "ejs": "^2.5.2",
+    "express": "^4.14.0",
+    "mdns-js": "^0.5.0",
+    "morgan": "^1.7.0",
+    "os": "^0.1.1",
+    "promise": "^7.1.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.1",
+    "gulp-livereload": "^3.8.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-watch": "^4.3.10",
+    "jshint": "^2.9.4"
+  }
+}
