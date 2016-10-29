@@ -1,57 +1,92 @@
 (function () {
-	var networkDiscoveryService = require('../../services/networkDiscovery/networkDiscoveryService'),
-	castCommands = require('../../services/videoCast/castCommands');
-	CastClient = require('../../services/videoCast/castClient');
+	var networkDiscoveryService = require('../../services/network/networkDiscoveryService'),
+	CastCommand = require('../../services/videoCast/castCommand'),
+	CastClient = require('../../services/videoCast/castClient'),
+	mediaHostingService = require('../../services/mediaHosting/mediaHostingService'),
+	Promise = require('promise');
 
-	var castClient = new CastClient();
+	var castClient;
 
-	var cast = function (req, res) {
-		var cmd = req.params._cmd;
-
-		if (cmd === castCommands.START) {
-			startCast(req, res);
-		} else {
-			stopCast(req, res);
-		}
-	};
-
-	var startCast = function (req, res) {
-		networkDiscoveryService.getChromeCast().then(function (data) {
-			castClient
-			.connect(data.addresses)
-			.then(castClient.launch)
+	function startCastClient(host, media) {
+		return new Promise(function (resolve, reject) {
+			stopCastClient()
+			.then(function () {
+				castClient = new CastClient();
+				return castClient.connect(host.addresses);
+			})
+			.then(function () {
+				return castClient.launch();
+			})
 			.then(function () {
 				return castClient.load({
 					// Here you can plug an URL to any mp4, webm, mp3 or jpg file with the proper contentType.
-					contentId : "http://192.168.1.13:3000/static/hp.mp4",
+					contentId : mediaHostingService.hostMediaContent(media.fullName),
 					contentType : 'video/mp4',
 					streamType : 'BUFFERED', // or LIVE
 					// Title and cover displayed while buffering
 					metadata : {
 						type : 0,
 						metadataType : 0,
-						title : "Harry Potter",
-						images : [{
-								url : "http://192.168.1.13:3000/static/hp.jpg"
-							}
-						]
+						title : media.name,
+						// images : [{
+						// url : "TODO: try to add media cover"
+						// }]
 					}
 				});
-			})
+			}).done(resolve);
+		});
+	}
+
+	function stopCastClient() {
+		return new Promise(function (resolve, reject) {
+			mediaHostingService.stopMediaContentHosting();
+			if (castClient) {
+				castClient.stop().done(resolve);
+			} else {
+				resolve();
+			}
+		});
+	}
+
+	//request handlers
+
+	function startCast(req, res) {
+		networkDiscoveryService.getChromeCast()
+		.done(function (host) {
+			startCastClient(host, req.body)
 			.done(function () {
-				res.json(data);
+				res.json(true);
 			});
 		});
-	};
+	}
 
-	var stopCast = function (req, res) {
-		// console.log(req.params._cmd);
-		castClient
-		.stop()
+	function stopCast(req, res) {
+		stopCastClient()
 		.done(function () {
 			res.json(true);
 		});
-	};
+	}
+
+	function dummyHandler(req, res) {
+		//for test purpose
+		res.json(true);
+	}
+
+	function cast(req, res) {
+		var cmd = new CastCommand(req.params._cmd);
+
+		switch (cmd.value) {
+		case cmd.commands.START:
+			startCast(req, res);
+			break;
+		case cmd.commands.STOP:
+			stopCast(req, res);
+			break;
+		default:
+			dummyHandler(req, res);
+			break;
+		}
+	}
 
 	module.exports = {
 		cast : cast

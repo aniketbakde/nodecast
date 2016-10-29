@@ -29,7 +29,7 @@
 
 				function castVideo(file) {
 					console.log(file);
-					videoCastFactory.cast(file.fullName);
+					videoCastFactory.castVideo(file);
 				}
 
 				$scope.getFiles = getFiles;

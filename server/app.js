@@ -1,13 +1,12 @@
 (function () {
 	'use strict';
 
-	var express = require('express');
-	var path = require('path');
-	var logger = require('morgan');
-	var cookieParser = require('cookie-parser');
-	var bodyParser = require('body-parser');
-
-	var routes = require('./routes/index');
+	var express = require('express'),
+	path = require('path'),
+	logger = require('morgan'),
+	cookieParser = require('cookie-parser'),
+	bodyParser = require('body-parser'),
+	routes = require('./routes/index');
 
 	var app = express();
 
@@ -24,7 +23,6 @@
 	app.use(cookieParser());
 
 	app.use(express.static(path.join(__dirname, '../client')));
-	app.use("/static", express.static(path.join(__dirname, '../server/hp')));
 
 	app.use('/', routes);
 

@@ -34,7 +34,7 @@
 			self.client.launch(DefaultMediaReceiver, function (err, player) {
 				self.player = player;
 				self.player.on('status', function (status) {
-					console.log('status broadcast playerState=%s', status.playerState);
+					// console.log('status broadcast playerState=%s', status.playerState);
 					self.playerStatus = status;
 				});
 				resolve();
@@ -49,7 +49,7 @@
 			self.player.load(mediaOptions, {
 				autoplay : true
 			}, function (err, status) {
-				console.log('media loaded playerState=%s', status.playerState);
+				// console.log('media loaded playerState=%s', status.playerState);
 				self.playerStatus = status;
 				resolve();
 			});
