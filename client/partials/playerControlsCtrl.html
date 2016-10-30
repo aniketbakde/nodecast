@@ -1,0 +1,59 @@
+<div ng-controller="PlayerControlsCtrl">
+	<nav id="player-controls" class="navbar navbar-default navbar-fixed-bottom">
+		<div class="container-fluid">
+			<div class="progress">
+				<div class="progress-bar"
+					role="progressbar"
+					aria-valuenow="{{playerState.currentTime}}"
+					aria-valuemin="0"
+					aria-valuemax="{{playerState.mediaDuration}}"
+					style="width: {{playerState.progress}}%;">
+				</div>
+			</div>
+			<div class="text-center">
+				<div class="btn-group btn-group-lg player-control-buttons" role="group" aria-label="...">
+					<button type="button"
+					class="btn btn-default glyphicon glyphicon-fast-backward navbar-btn"
+					ng-click="stepback()">
+					</button>
+					<button type="button"
+					class="btn btn-default glyphicon glyphicon-step-backward navbar-btn"
+					ng-click="fastback()">
+					</button>
+					<button type="button"
+					class="btn btn-default glyphicon glyphicon-backward navbar-btn"
+					ng-click="back()">
+					</button>
+
+					<button type="button"
+					class="btn btn-default glyphicon glyphicon-play navbar-btn"
+					ng-hide="playerState.isPlaying"
+					ng-click="play()">
+					</button>
+					<button type="button"
+					class="btn btn-default glyphicon glyphicon-pause navbar-btn"
+					ng-show="playerState.isPlaying"
+					ng-click="pause()">
+					</button>
+					<button type="button"
+					class="btn btn-default glyphicon glyphicon-stop navbar-btn"
+					ng-click="stop()">
+					</button>
+
+					<button type="button"
+					class="btn btn-default glyphicon glyphicon-forward navbar-btn"
+					ng-click="forward()">
+					</button>
+					<button type="button"
+					class="btn btn-default glyphicon glyphicon-step-forward navbar-btn"
+					ng-click="fastforward()">
+					</button>
+					<button type="button"
+					class="btn btn-default glyphicon glyphicon-fast-forward navbar-btn"
+					ng-click="stepforward()">
+					</button>
+				</div>
+			</div>
+		</div>
+	</nav>
+</div>

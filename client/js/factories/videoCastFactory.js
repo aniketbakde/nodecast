@@ -4,8 +4,7 @@
 			function ($http) {
 				var urlBase = '/api/castvideo/';
 				var videoCastCommands = {
-					START: 'start',
-					STOP: 'stop'
+					START: 'start'
 				}
 				
 				var _videoCastFactory = {};

@@ -1,13 +1,13 @@
 (function () {
 	angular.module('nodeCast').controller('FileListCtrl',
-		['$rootScope', '$scope', '$timeout', 'filesFactory', 'videoCastFactory',
-			function ($rootScope, $scope, $timeout, filesFactory, videoCastFactory) {
+		['$rootScope', '$scope', '$timeout', 'filesFactory', 'videoCastFactory', 'playerControlsFactory',
+			function ($rootScope, $scope, $timeout, filesFactory, videoCastFactory, playerControlsFactory) {
 
 				$scope.content = null;
 				$scope.currentDir = {};
 				$scope.pathBreadCrumbs = null;
 				$scope.goToDirName = {};
-				
+
 				$getFilesErrorModal = $('#getFilesErrorModal');
 
 				function getFiles(dir) {
@@ -45,7 +45,17 @@
 				}
 
 				function castVideo(file) {
-					videoCastFactory.castVideo(file);
+					playerControlsFactory.hideControls();
+					videoCastFactory.castVideo(file)
+					.then(function (playerStatusData) {
+						if (playerStatusData && playerStatusData.data) {
+							var playerStatus = playerStatusData.data;
+							if (playerStatus && playerStatus.media && playerStatus.media.duration) {
+								$rootScope.$broadcast('rootScope:mediaDuration', playerStatus.media.duration);
+							}
+						}
+						playerControlsFactory.showControls()
+					});
 				}
 
 				$scope.getFiles = getFiles;

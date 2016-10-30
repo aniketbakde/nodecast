@@ -8,7 +8,6 @@
 	function CastClient() {
 		this.client = new Client();
 		this.player = null;
-		// this.playerStatus = null;
 		this.mediaDuration = undefined;
 
 		this.client.on('error', function (err) {
@@ -35,8 +34,7 @@
 				self.player.getStatus(function (err, status) {
 					console.log('GETSTATUS');
 					// console.log(err);
-					// console.log(status);
-					// self.playerStatus = null;
+					console.log(status);
 					// self.player = null;
 					resolve(status);
 				});
@@ -54,7 +52,6 @@
 				self.player = player;
 				self.player.on('status', function (status) {
 					// console.log('status broadcast playerState=%s', status.playerState);
-					// self.playerStatus = status;
 				});
 				resolve();
 			});
@@ -71,15 +68,13 @@
 				console.log('LOADING');
 				// console.log(err);
 				console.log(status);
-				// self.playerStatus = status;
 				if (status && status.media) {
 					var media = status.media;
 					if (media.duration) {
 						self.mediaDuration = media.duration;
 					}
 				}
-				//can get media info from here
-				resolve();
+				resolve(status);
 			});
 		});
 	};
@@ -123,8 +118,6 @@
 					console.log('PLAY');
 					// console.log(err);
 					// console.log(status);
-					// self.playerStatus = null;
-					// self.player = null;
 					resolve();
 				});
 			} else {
@@ -141,8 +134,6 @@
 					console.log('PAUSE');
 					// console.log(err);
 					// console.log(status);
-					// self.playerStatus = null;
-					// self.player = null;
 					resolve();
 				});
 			} else {
@@ -157,7 +148,6 @@
 			if (self.player) {
 				self.client.stop(self.player, function (err, status) {
 					// console.log('media stopped playerState=%s', status.playerState);
-					// self.playerStatus = null;
 					self.player = null;
 					self.mediaDuration = undefined;
 					resolve();
@@ -167,6 +157,8 @@
 			}
 		});
 	};
+	
+	CastClient.prototype.getPlayerStatus = getPlayerStatus;
 
 	module.exports = CastClient;
 }

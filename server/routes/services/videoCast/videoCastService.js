@@ -81,6 +81,17 @@
 			}
 		});
 	}
+	
+	function getCastClientStatus() {
+		return new Promise(function (resolve, reject) {
+			// mediaHostingService.stopMediaContentHosting();
+			if (castClient) {
+				castClient.getPlayerStatus().done(resolve);
+			} else {
+				resolve();
+			}
+		});
+	}
 
 	//request handlers
 
@@ -88,8 +99,8 @@
 		networkDiscoveryService.getChromeCast()
 		.done(function (host) {
 			startCastClient(host, req.body)
-			.done(function () {
-				res.json(true);
+			.done(function (status) {
+				res.json(status);
 			});
 		});
 	}
@@ -121,6 +132,13 @@
 		stopCastClient()
 		.done(function () {
 			res.json(true);
+		});
+	}
+	
+	function getStatus(req, res) {
+		getCastClientStatus()
+		.done(function (status) {
+			res.json(status);
 		});
 	}
 
@@ -166,6 +184,9 @@
 			break;
 		case cmd.commands.STOP:
 			stopCast(req, res);
+			break;
+		case cmd.commands.STATUS:
+			getStatus(req, res);
 			break;
 		default:
 			dummyHandler(req, res);

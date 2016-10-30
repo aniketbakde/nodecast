@@ -25,8 +25,8 @@
 			});
 
 			browser.on('update', function (data) {
-				console.log(data.addresses);
-				console.log(data.txt);
+				// console.log(data.addresses);
+				// console.log(data.txt);
 				var addresses = data.addresses[0];
 				// var deviceName = data.txt.filter(function (item) {
 						// return (item.indexOf("fn=") >= 0);
