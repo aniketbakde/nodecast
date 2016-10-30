@@ -11,7 +11,7 @@
 	//register nodemon task
 	gulp.task('nodemon', function () {
 		nodemon({
-			script : 'server/app.js',
+			script : 'server/cluster.js',
 			env : {
 				'NODE_ENV' : 'development'
 			}

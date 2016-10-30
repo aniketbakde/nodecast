@@ -20,7 +20,7 @@
 						var pathParts = path.split('/');
 						for (var i = 0; i < pathParts.length; i++) {
 							pathArr.push({
-								name : pathParts[i] + '/',
+								name : pathParts[i],
 								fullName : pathParts.slice(0, i + 1).join('/')
 							});
 						}

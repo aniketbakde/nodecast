@@ -6,34 +6,35 @@
 					<div class="navbar-brand">Node Cast</div>
 				</div>
 				<div>
-					<form class="navbar-form navbar-left">
-						<button type="button"
-						class="btn btn-default glyphicon glyphicon-chevron-left"
-						ng-hide="content.drives.length > 0"
+					<button type="button"
+						class="btn btn-default glyphicon glyphicon-chevron-left navbar-btn"
+						ng-show="pathBreadCrumbs.length"
 						ng-click="getParentDir()"></button>
-						<div class="input-group">
-							<span class="input-group-addon" id="file-path">
-								<a href="javascript:void(0)"
+					<ul class="breadcrumb list-inline">
+						<li ng-class="{active: !pathBreadCrumbs.length}">
+							<a href="javascript:void(0)"
 								ng-click="getFiles()"
-								ng-show="pathBreadCrumbs.length">file://</a>
-								<div ng-hide="pathBreadCrumbs.length">file://</div>
-							</span>
-							<span class="input-group-addon"
-							ng-repeat="breadCrumb in pathBreadCrumbs">
-								<a href="javascript:void(0)"
-								ng-click="getFiles(breadCrumb)"
-								ng-hide="$last">{{breadCrumb.name}}</a>
-								<div ng-show="$last">{{breadCrumb.name}}</div>
-							</span>
+								ng-show="pathBreadCrumbs.length">file:</a>
+							<div ng-hide="pathBreadCrumbs.length">file:</div>
+						</li>
+						<li ng-repeat="breadCrumb in pathBreadCrumbs" ng-hide="$last">
+							<a href="javascript:void(0)"
+								ng-click="getFiles(breadCrumb)">{{breadCrumb.name}}</a>
+						</li>
+						<li class="active">
+							{{pathBreadCrumbs[pathBreadCrumbs.length - 1].name}}
+						</li>
+					</ul>
+					<form class="navbar-form navbar-left">
+						<div class="form-group">
 							<input type="text"
-							class="form-control"
-							placeholder="Go To Folder"
-							ng-model="goToDirName.text"
-							enter-key-press="goToDir()"
-							/>
+								class="form-control"
+								placeholder="Go To Folder"
+								ng-model="goToDirName.text"
+								enter-key-press="goToDir()"/>
 						</div>
 						<button type="button" class="btn btn-default"
-						ng-click="goToDir()">Go</button>
+							ng-click="goToDir()">Go</button>
 					</form>
 				</div>
 			</div>
@@ -42,6 +43,10 @@
 
 	<div class="alert alert-info text-center" ng-hide="content.drives.length > 0 || content.files.length > 0">
 		<h3>No Files!</h3>
+	</div>
+
+	<div uib-collapse="!getFilesError">
+		<div class="alert alert-danger text-center" role="alert">Access Denied !!!</div>
 	</div>
 
 	<div class="row">

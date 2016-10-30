@@ -1,9 +1,33 @@
 * {
     font-family: calibri;
 }
-.navbar-form .glyphicon {
-	top: 0px;
-}
 .thumbnail .caption h3{
 	word-wrap: break-word;
+}
+.nav, .pagination, .carousel, .panel-title a {
+	cursor: pointer;
+}
+.navbar .glyphicon {
+	top: 0px;
+	float: left;
+}
+.navbar .breadcrumb {
+    float: left;
+    margin: 7px 0px 7px 0px;
+	padding: 8px 0px 8px 10px;
+}
+.navbar .breadcrumb>li+li:before {
+    padding: 0px;
+}
+.navbar .list-inline>li {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+.navbar-form {
+    padding: 0px 5px;
+}
+.navbar-form .form-control {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
 }

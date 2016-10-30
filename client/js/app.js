@@ -1,5 +1,5 @@
 (function () {
-	angular.module('nodeCast', ['ngRoute'])
+	angular.module('nodeCast', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 	.config(function ($routeProvider) {
 		$routeProvider
 		.when('/', {

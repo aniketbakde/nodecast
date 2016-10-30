@@ -1,12 +1,13 @@
 (function () {
 	angular.module('nodeCast').controller('FileListCtrl',
-		['$rootScope', '$scope', 'filesFactory', 'videoCastFactory',
-			function ($rootScope, $scope, filesFactory, videoCastFactory) {
+		['$rootScope', '$scope', '$timeout', 'filesFactory', 'videoCastFactory',
+			function ($rootScope, $scope, $timeout, filesFactory, videoCastFactory) {
 
 				$scope.content = null;
 				$scope.currentDir = {};
 				$scope.pathBreadCrumbs = null;
 				$scope.goToDirName = {};
+				$scope.getFilesError = false;
 
 				function getFiles(dir) {
 					if (dir) {
@@ -20,6 +21,12 @@
 						currentDir : (dir ? dir.fullName : null)
 					}).then(function (data) {
 						$scope.content = data.data;
+					}).catch (function () {
+						$scope.getFilesError = true;
+						$scope.pathBreadCrumbs = $scope.pathBreadCrumbs.slice(0, $scope.pathBreadCrumbs.length - 1);
+						$timeout(function () {
+							$scope.getFilesError = false;
+						}, 3000);
 					});
 				};
 
