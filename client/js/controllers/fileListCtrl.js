@@ -7,7 +7,8 @@
 				$scope.currentDir = {};
 				$scope.pathBreadCrumbs = null;
 				$scope.goToDirName = {};
-				$scope.getFilesError = false;
+				
+				$getFilesErrorModal = $('#getFilesErrorModal');
 
 				function getFiles(dir) {
 					if (dir) {
@@ -22,10 +23,10 @@
 					}).then(function (data) {
 						$scope.content = data.data;
 					}).catch (function () {
-						$scope.getFilesError = true;
 						$scope.pathBreadCrumbs = $scope.pathBreadCrumbs.slice(0, $scope.pathBreadCrumbs.length - 1);
+						$getFilesErrorModal.modal('show');
 						$timeout(function () {
-							$scope.getFilesError = false;
+							$getFilesErrorModal.modal('hide');
 						}, 3000);
 					});
 				};

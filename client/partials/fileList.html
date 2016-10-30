@@ -9,7 +9,8 @@
 					<button type="button"
 						class="btn btn-default glyphicon glyphicon-chevron-left navbar-btn"
 						ng-show="pathBreadCrumbs.length"
-						ng-click="getParentDir()"></button>
+						ng-click="getParentDir()">
+					</button>
 					<ul class="breadcrumb list-inline">
 						<li ng-class="{active: !pathBreadCrumbs.length}">
 							<a href="javascript:void(0)"
@@ -45,8 +46,17 @@
 		<h3>No Files!</h3>
 	</div>
 
-	<div uib-collapse="!getFilesError">
-		<div class="alert alert-danger text-center" role="alert">Access Denied !!!</div>
+	<div class="modal fade" id="getFilesErrorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content alert">
+				<div class="modal-body">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title text-center" id="myModalLabel">Access Denied !!!</h4> 
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div class="row">
