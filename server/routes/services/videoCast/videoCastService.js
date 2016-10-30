@@ -38,6 +38,39 @@
 		});
 	}
 
+	function seekDiffCastClient(timeDiff) {
+		return new Promise(function (resolve, reject) {
+			// mediaHostingService.stopMediaContentHosting();
+			if (castClient) {
+				castClient.diffSeek(timeDiff).done(resolve);
+			} else {
+				resolve();
+			}
+		});
+	}
+
+	function playCastClient() {
+		return new Promise(function (resolve, reject) {
+			// mediaHostingService.stopMediaContentHosting();
+			if (castClient) {
+				castClient.play().done(resolve);
+			} else {
+				resolve();
+			}
+		});
+	}
+
+	function pauseCastClient() {
+		return new Promise(function (resolve, reject) {
+			// mediaHostingService.stopMediaContentHosting();
+			if (castClient) {
+				castClient.pause().done(resolve);
+			} else {
+				resolve();
+			}
+		});
+	}
+
 	function stopCastClient() {
 		return new Promise(function (resolve, reject) {
 			mediaHostingService.stopMediaContentHosting();
@@ -61,6 +94,29 @@
 		});
 	}
 
+	function seekDiffCast(req, res, cmd) {
+		// console.log(cmd);
+		// console.log(cmd.seekDiffDuration[cmd.value]);
+		seekDiffCastClient(cmd.seekDiffDuration[cmd.value])
+		.done(function () {
+			res.json(true);
+		});
+	}
+
+	function playCast(req, res) {
+		playCastClient()
+		.done(function () {
+			res.json(true);
+		});
+	}
+
+	function pauseCast(req, res) {
+		pauseCastClient()
+		.done(function () {
+			res.json(true);
+		});
+	}
+
 	function stopCast(req, res) {
 		stopCastClient()
 		.done(function () {
@@ -74,12 +130,39 @@
 		res.json(true);
 	}
 
+	/*
+	NONE : 0,
+	START : 1,
+	STEPBACK : 2,
+	FASTBACK : 3,
+	BACK : 4,
+	PLAY : 5,
+	PAUSE : 6,
+	STOP : 7,
+	FORWARD : 8,
+	FASTFORWARD : 9,
+	STEPFORWARD : 10
+	 */
 	function cast(req, res) {
 		var cmd = new CastCommand(req.params._cmd);
 
 		switch (cmd.value) {
 		case cmd.commands.START:
 			startCast(req, res);
+			break;
+		case cmd.commands.STEPBACK:
+		case cmd.commands.FASTBACK:
+		case cmd.commands.BACK:
+		case cmd.commands.FORWARD:
+		case cmd.commands.FASTFORWARD:
+		case cmd.commands.STEPFORWARD:
+			seekDiffCast(req, res, cmd);
+			break;
+		case cmd.commands.PLAY:
+			playCast(req, res);
+			break;
+		case cmd.commands.PAUSE:
+			pauseCast(req, res);
 			break;
 		case cmd.commands.STOP:
 			stopCast(req, res);
