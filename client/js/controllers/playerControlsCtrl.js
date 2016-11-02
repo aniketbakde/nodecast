@@ -3,8 +3,7 @@
 		['$rootScope', '$scope', '$timeout', '$interval', 'playerControlsFactory',
 			function ($rootScope, $scope, $timeout, $interval, playerControlsFactory) {
 
-				var STATUS_CHECK_INTERVAL = 10000;
-				var PROGRESS_CHECK_INTERVAL = 1000;
+				var STATUS_CHECK_INTERVAL = 1000;
 
 				$scope.playerState = {
 					isPlaying : 1,
@@ -49,7 +48,6 @@
 
 				function startStatusTimer() {
 					stopStatusTimer();
-					startProgressTimer();
 					$scope.statusTimer.timer = $interval(function () {
 							if (!$scope.statusTimer.isBusy) {
 								$scope.statusTimer.isBusy = true;
@@ -63,25 +61,9 @@
 				}
 
 				function stopStatusTimer() {
-					stopProgressTimer();
 					if ($scope.statusTimer.timer) {
 						$interval.cancel($scope.statusTimer.timer);
 						$scope.statusTimer.timer = null;
-					}
-				}
-
-				function startProgressTimer() {
-					stopProgressTimer();
-					$scope.progressTimer = $interval(function () {
-							$scope.playerState.currentTime += 1;
-							$scope.playerState.progress = parseInt(($scope.playerState.currentTime * 100) / $scope.playerState.mediaDuration);
-						}, PROGRESS_CHECK_INTERVAL);
-				}
-
-				function stopProgressTimer() {
-					if ($scope.progressTimer) {
-						$interval.cancel($scope.progressTimer);
-						$scope.progressTimer = null;
 					}
 				}
 
