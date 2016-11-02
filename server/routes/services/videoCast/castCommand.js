@@ -12,7 +12,8 @@
 		FORWARD : 8,
 		FASTFORWARD : 9,
 		STEPFORWARD : 10,
-		STATUS: 11
+		STATUS: 11,
+		SEEK: 12
 	};
 
 	var seekDiffDuration = {

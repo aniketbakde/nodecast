@@ -13,7 +13,8 @@
 					FORWARD : 'forward',
 					FASTFORWARD : 'fastforward',
 					STEPFORWARD : 'stepforward',
-					STATUS: 'status'
+					STATUS : 'status',
+					SEEK: 'seek'
 				}
 
 				var _playerControlsFactory = {};
@@ -65,9 +66,13 @@
 				_playerControlsFactory.stepforward = function () {
 					return $http.post(urlBase + playerControlCommands.STEPFORWARD);
 				};
-				
+
 				_playerControlsFactory.getPlayerStatus = function () {
 					return $http.post(urlBase + playerControlCommands.STATUS);
+				};
+				
+				_playerControlsFactory.seek = function (data) {
+					return $http.post(urlBase + playerControlCommands.SEEK, data);
 				};
 
 				return _playerControlsFactory;

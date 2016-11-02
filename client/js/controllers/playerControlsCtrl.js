@@ -27,7 +27,16 @@
 					isBusy : false
 				};
 
-				$scope.progressTimer = null;
+				$("#player-controls .progress").on('click', function (e) {
+					var progressBarWidth = $(this).outerWidth();
+					var parentWidth = $(this).parent().outerWidth();
+					var offsetX = (parentWidth - progressBarWidth) / 2;
+					var xPos = e.pageX - offsetX;
+					var seekTime = ($scope.playerState.mediaDuration * xPos) / progressBarWidth;
+					playerControlsFactory.seek({
+						time : seekTime
+					});
+				});
 
 				function setPlayerStateData(playerStatusData) {
 					if (playerStatusData && playerStatusData.data) {

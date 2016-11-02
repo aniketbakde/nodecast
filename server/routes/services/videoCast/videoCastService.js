@@ -40,9 +40,18 @@
 
 	function seekDiffCastClient(timeDiff) {
 		return new Promise(function (resolve, reject) {
-			// mediaHostingService.stopMediaContentHosting();
 			if (castClient) {
 				castClient.diffSeek(timeDiff).done(resolve);
+			} else {
+				resolve();
+			}
+		});
+	}
+	
+	function seekCastClient(pTime) {
+		return new Promise(function (resolve, reject) {
+			if (castClient) {
+				castClient.seek(pTime.time).done(resolve);
 			} else {
 				resolve();
 			}
@@ -51,7 +60,6 @@
 
 	function playCastClient() {
 		return new Promise(function (resolve, reject) {
-			// mediaHostingService.stopMediaContentHosting();
 			if (castClient) {
 				castClient.play().done(resolve);
 			} else {
@@ -62,7 +70,6 @@
 
 	function pauseCastClient() {
 		return new Promise(function (resolve, reject) {
-			// mediaHostingService.stopMediaContentHosting();
 			if (castClient) {
 				castClient.pause().done(resolve);
 			} else {
@@ -84,7 +91,6 @@
 	
 	function getCastClientStatus() {
 		return new Promise(function (resolve, reject) {
-			// mediaHostingService.stopMediaContentHosting();
 			if (castClient) {
 				castClient.getPlayerStatus().done(resolve);
 			} else {
@@ -94,7 +100,6 @@
 	}
 
 	//request handlers
-
 	function startCast(req, res) {
 		networkDiscoveryService.getChromeCast()
 		.done(function (host) {
@@ -106,9 +111,14 @@
 	}
 
 	function seekDiffCast(req, res, cmd) {
-		// console.log(cmd);
-		// console.log(cmd.seekDiffDuration[cmd.value]);
 		seekDiffCastClient(cmd.seekDiffDuration[cmd.value])
+		.done(function () {
+			res.json(true);
+		});
+	}
+	
+	function seekCast(req, res) {
+		seekCastClient(req.body)
 		.done(function () {
 			res.json(true);
 		});
@@ -148,22 +158,8 @@
 		res.json(true);
 	}
 
-	/*
-	NONE : 0,
-	START : 1,
-	STEPBACK : 2,
-	FASTBACK : 3,
-	BACK : 4,
-	PLAY : 5,
-	PAUSE : 6,
-	STOP : 7,
-	FORWARD : 8,
-	FASTFORWARD : 9,
-	STEPFORWARD : 10
-	 */
 	function cast(req, res) {
 		var cmd = new CastCommand(req.params._cmd);
-
 		switch (cmd.value) {
 		case cmd.commands.START:
 			startCast(req, res);
@@ -187,6 +183,9 @@
 			break;
 		case cmd.commands.STATUS:
 			getStatus(req, res);
+			break;
+		case cmd.commands.SEEK:
+			seekCast(req, res);
 			break;
 		default:
 			dummyHandler(req, res);

@@ -18,7 +18,6 @@
 	}
 
 	CastClient.prototype.connect = function (host) {
-		// var self = this;
 		return new Promise(function (resolve, reject) {
 			self.client.connect(host, function () {
 				console.log('connected ...');
@@ -28,14 +27,10 @@
 	};
 
 	function getPlayerStatus() {
-		// var self = this;
 		return new Promise(function (resolve, reject) {
 			if (self.player) {
 				self.player.getStatus(function (err, status) {
-					console.log('GETSTATUS');
-					// console.log(err);
-					console.log(status);
-					// self.player = null;
+					// console.log('GETSTATUS');
 					resolve(status);
 				});
 			} else {
@@ -45,14 +40,10 @@
 	}
 
 	CastClient.prototype.launch = function () {
-		// var self = this;
 		return new Promise(function (resolve, reject) {
-			// console.log(self.client);
 			self.client.launch(DefaultMediaReceiver, function (err, player) {
 				self.player = player;
-				self.player.on('status', function (status) {
-					// console.log('status broadcast playerState=%s', status.playerState);
-				});
+				self.player.on('status', function (status) {});
 				resolve();
 			});
 		});
@@ -60,14 +51,12 @@
 
 	CastClient.prototype.load = function (mediaOptions) {
 		console.log('app "%s" launched, loading media %s ...', this.player.session.displayName, mediaOptions.contentId);
-		// var self = this;
 		return new Promise(function (resolve, reject) {
 			self.player.load(mediaOptions, {
 				autoplay : true
 			}, function (err, status) {
-				console.log('LOADING');
-				// console.log(err);
-				console.log(status);
+				// console.log('LOADING');
+				// console.log(status);
 				if (status && status.media) {
 					var media = status.media;
 					if (media.duration) {
@@ -81,9 +70,7 @@
 
 	//seek by timeDiff secs
 	CastClient.prototype.diffSeek = function (timeDiff) {
-		// var self = this;
 		return new Promise(function (resolve, reject) {
-
 			getPlayerStatus()
 			.done(function (status) {
 				if (status && status.currentTime) {
@@ -97,9 +84,7 @@
 					}
 
 					self.player.seek(newTime, function (err, status) {
-						console.log('SEEKING');
-						// console.log(err);
-						// console.log(status);
+						// console.log('SEEKING');
 						resolve();
 					});
 
@@ -110,14 +95,20 @@
 		});
 	};
 
+	CastClient.prototype.seek = function (time) {
+		return new Promise(function (resolve, reject) {
+			self.player.seek(time, function (err, status) {
+				// console.log('SEEKING');
+				resolve();
+			});
+		});
+	};
+
 	CastClient.prototype.play = function () {
-		// var self = this;
 		return new Promise(function (resolve, reject) {
 			if (self.player) {
 				self.player.play(function (err, status) {
-					console.log('PLAY');
-					// console.log(err);
-					// console.log(status);
+					// console.log('PLAY');
 					resolve();
 				});
 			} else {
@@ -127,13 +118,10 @@
 	};
 
 	CastClient.prototype.pause = function () {
-		// var self = this;
 		return new Promise(function (resolve, reject) {
 			if (self.player) {
 				self.player.pause(function (err, status) {
-					console.log('PAUSE');
-					// console.log(err);
-					// console.log(status);
+					// console.log('PAUSE');
 					resolve();
 				});
 			} else {
@@ -143,11 +131,9 @@
 	};
 
 	CastClient.prototype.stop = function () {
-		// var self = this;
 		return new Promise(function (resolve, reject) {
 			if (self.player) {
 				self.client.stop(self.player, function (err, status) {
-					// console.log('media stopped playerState=%s', status.playerState);
 					self.player = null;
 					self.mediaDuration = undefined;
 					resolve();
@@ -157,7 +143,7 @@
 			}
 		});
 	};
-	
+
 	CastClient.prototype.getPlayerStatus = getPlayerStatus;
 
 	module.exports = CastClient;
