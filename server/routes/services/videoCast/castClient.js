@@ -68,33 +68,6 @@
 		});
 	};
 
-	//seek by timeDiff secs
-	CastClient.prototype.diffSeek = function (timeDiff) {
-		return new Promise(function (resolve, reject) {
-			getPlayerStatus()
-			.done(function (status) {
-				if (status && status.currentTime) {
-					var curTime = status.currentTime;
-					var newTime = curTime + timeDiff;
-
-					if (newTime < 0) {
-						newTime = 0;
-					} else if (newTime > self.mediaDuration) {
-						newTime = self.mediaDuration - 5;
-					}
-
-					self.player.seek(newTime, function (err, status) {
-						// console.log('SEEKING');
-						resolve();
-					});
-
-				} else {
-					resolve();
-				}
-			});
-		});
-	};
-
 	CastClient.prototype.seek = function (time) {
 		return new Promise(function (resolve, reject) {
 			self.player.seek(time, function (err, status) {

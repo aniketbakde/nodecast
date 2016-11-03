@@ -17,19 +17,21 @@
   <script type="text/javascript" src="/js/factories/filesFactory.js"></script>
   <script type="text/javascript" src="/js/factories/videoCastFactory.js"></script>
   <script type="text/javascript" src="/js/factories/playerControlsFactory.js"></script>
+  <script type="text/javascript" src="/js/factories/playerStatusFactory.js"></script>
   <script type="text/javascript" src="/js/controllers/fileListCtrl.js"></script>
   <script type="text/javascript" src="/js/controllers/playerControlsCtrl.js"></script>
+  <script type="text/javascript" src="/js/controllers/progressCtrl.js"></script>
   <script type="text/javascript" src="/js/directives/enterKeyPress.js"></script>
 </head>
  
 <body>
   <div class="container">
     <ng-view></ng-view>
-	<div ng-include="'/partials/playerControlsCtrl.html'"></div>
+	<div ng-include="'/partials/playerControls.html'"></div>
   </div>
  
   <!-- Live reload script -->
-  <script type="text/javascript" src="http://localhost:35729/livereload.js"></script>
+  <!--script type="text/javascript" src="http://localhost:35729/livereload.js"></script-->
 </body>
  
 </html>

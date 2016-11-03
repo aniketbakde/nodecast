@@ -1,15 +1,7 @@
 <div ng-controller="PlayerControlsCtrl">
 	<nav id="player-controls" class="navbar navbar-default navbar-fixed-bottom">
 		<div class="container-fluid">
-			<div class="progress">
-				<div class="progress-bar"
-					role="progressbar"
-					aria-valuenow="{{playerState.currentTime}}"
-					aria-valuemin="0"
-					aria-valuemax="{{playerState.mediaDuration}}"
-					style="width: {{playerState.progress}}%;">
-				</div>
-			</div>
+			<div ng-include="'/partials/progressBar.html'"></div>
 			<div class="text-center">
 				<div class="btn-group btn-group-lg player-control-buttons" role="group" aria-label="...">
 					<button type="button"
@@ -25,15 +17,9 @@
 					ng-click="back()">
 					</button>
 
-					<button type="button"
+					<button id="play-pause" type="button"
 					class="btn btn-default glyphicon glyphicon-play navbar-btn"
-					ng-hide="playerState.isPlaying"
-					ng-click="play()">
-					</button>
-					<button type="button"
-					class="btn btn-default glyphicon glyphicon-pause navbar-btn"
-					ng-show="playerState.isPlaying"
-					ng-click="pause()">
+					ng-click="playPause()">
 					</button>
 					<button type="button"
 					class="btn btn-default glyphicon glyphicon-stop navbar-btn"

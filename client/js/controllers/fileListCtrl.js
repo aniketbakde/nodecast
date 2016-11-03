@@ -48,13 +48,8 @@
 					playerControlsFactory.hideControls();
 					videoCastFactory.castVideo(file)
 					.then(function (playerStatusData) {
-						if (playerStatusData && playerStatusData.data) {
-							var playerStatus = playerStatusData.data;
-							if (playerStatus && playerStatus.media && playerStatus.media.duration) {
-								$rootScope.$broadcast('rootScope:mediaDuration', playerStatus.media.duration);
-							}
-						}
-						playerControlsFactory.showControls()
+						$rootScope.$broadcast('rootScope:startStatusTimer');
+						playerControlsFactory.showControls();
 					});
 				}
 

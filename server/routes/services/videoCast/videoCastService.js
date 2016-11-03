@@ -38,16 +38,6 @@
 		});
 	}
 
-	function seekDiffCastClient(timeDiff) {
-		return new Promise(function (resolve, reject) {
-			if (castClient) {
-				castClient.diffSeek(timeDiff).done(resolve);
-			} else {
-				resolve();
-			}
-		});
-	}
-	
 	function seekCastClient(pTime) {
 		return new Promise(function (resolve, reject) {
 			if (castClient) {
@@ -88,7 +78,7 @@
 			}
 		});
 	}
-	
+
 	function getCastClientStatus() {
 		return new Promise(function (resolve, reject) {
 			if (castClient) {
@@ -110,13 +100,6 @@
 		});
 	}
 
-	function seekDiffCast(req, res, cmd) {
-		seekDiffCastClient(cmd.seekDiffDuration[cmd.value])
-		.done(function () {
-			res.json(true);
-		});
-	}
-	
 	function seekCast(req, res) {
 		seekCastClient(req.body)
 		.done(function () {
@@ -144,7 +127,7 @@
 			res.json(true);
 		});
 	}
-	
+
 	function getStatus(req, res) {
 		getCastClientStatus()
 		.done(function (status) {
@@ -163,14 +146,6 @@
 		switch (cmd.value) {
 		case cmd.commands.START:
 			startCast(req, res);
-			break;
-		case cmd.commands.STEPBACK:
-		case cmd.commands.FASTBACK:
-		case cmd.commands.BACK:
-		case cmd.commands.FORWARD:
-		case cmd.commands.FASTFORWARD:
-		case cmd.commands.STEPFORWARD:
-			seekDiffCast(req, res, cmd);
 			break;
 		case cmd.commands.PLAY:
 			playCast(req, res);
