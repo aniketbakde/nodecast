@@ -1,7 +1,7 @@
 (function () {
 	angular.module('nodeCast').controller('FileListCtrl',
-		['$rootScope', '$scope', '$timeout', 'filesFactory', 'videoCastFactory', 'playerControlsFactory',
-			function ($rootScope, $scope, $timeout, filesFactory, videoCastFactory, playerControlsFactory) {
+		['$rootScope', '$scope', '$timeout', 'filesFactory', 'videoCastFactory', 'playerControlsFactory', 'localStorageFactory',
+			function ($rootScope, $scope, $timeout, filesFactory, videoCastFactory, playerControlsFactory, localStorageFactory) {
 
 				$scope.content = null;
 				$scope.currentDir = {};
@@ -11,6 +11,7 @@
 				$getFilesErrorModal = $('#getFilesErrorModal');
 
 				function getFiles(dir) {
+					localStorageFactory.setLastAccessedDir(dir);
 					if (dir) {
 						$scope.currentDir = dir;
 						$scope.pathBreadCrumbs = filesFactory.getPathBreadCrumbs($scope.currentDir.fullName);
@@ -44,6 +45,10 @@
 					$scope.goToDirName = {};
 				}
 
+				function getFilesFromCache() {
+					getFiles(localStorageFactory.getLastAccessedDir());
+				}
+
 				function castVideo(file) {
 					playerControlsFactory.hideControls();
 					videoCastFactory.castVideo(file)
@@ -58,7 +63,7 @@
 				$scope.goToDir = goToDir;
 				$scope.castVideo = castVideo;
 
-				getFiles();
+				getFilesFromCache();
 			}
 		]);
 }
